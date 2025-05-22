@@ -1,0 +1,8 @@
+../Src/artos.c:31:6:main_idleThread	1
+../Src/artos.c:37:6:OS_init	2
+../Src/artos.c:56:6:OS_sched	3
+../Src/artos.c:72:6:OS_run	0
+../Src/artos.c:82:6:OS_tick	4
+../Src/artos.c:99:6:OS_delay	1
+../Src/artos.c:113:6:OSThread_start	4
+../Src/artos.c:160:6:PendSV_Handler	1

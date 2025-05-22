@@ -1,0 +1,2 @@
+../Inc/system_stm32f4xx.c:150:6:SystemInit	1
+../Inc/system_stm32f4xx.c:205:6:SystemCoreClockUpdate	6

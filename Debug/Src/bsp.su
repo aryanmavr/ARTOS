@@ -1,0 +1,15 @@
+../Inc/core_cm4.h:1816:22:__NVIC_SetPriority	16	static
+../Inc/core_cm4.h:2022:26:SysTick_Config	16	static
+../Src/bsp.c:21:6:SystemClock_Config	4	static
+../Src/bsp.c:68:6:SysTick_Handler	8	static,ignoring_inline_asm
+../Src/bsp.c:75:6:BSP_init	8	static
+../Src/bsp.c:95:6:BSP_ledRedOn	4	static
+../Src/bsp.c:99:6:BSP_ledRedOff	4	static
+../Src/bsp.c:103:6:BSP_ledBlueOn	4	static
+../Src/bsp.c:107:6:BSP_ledBlueOff	4	static
+../Src/bsp.c:111:6:BSP_ledGreenOn	4	static
+../Src/bsp.c:115:6:BSP_ledGreenOff	4	static
+../Src/bsp.c:119:6:OS_onStartup	8	static
+../Src/bsp.c:124:6:OS_onIdle	4	static,ignoring_inline_asm
+../Src/bsp.c:128:16:Q_onAssert	16	static
+../Src/bsp.c:139:16:assert_failed	16	static

@@ -1,0 +1,8 @@
+../Src/artos.c:31:6:main_idleThread	8	static
+../Src/artos.c:37:6:OS_init	32	static
+../Src/artos.c:56:6:OS_sched	16	static
+../Src/artos.c:72:6:OS_run	8	static,ignoring_inline_asm
+../Src/artos.c:82:6:OS_tick	24	static
+../Src/artos.c:99:6:OS_delay	24	static,ignoring_inline_asm
+../Src/artos.c:113:6:OSThread_start	32	static
+../Src/artos.c:160:6:PendSV_Handler	0	static,ignoring_inline_asm

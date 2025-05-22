@@ -1,0 +1,4 @@
+../Src/main.c:15:6:main_blinky1	8	static
+../Src/main.c:26:6:main_blinky2	8	static
+../Src/main.c:37:6:main_blinky3	8	static
+../Src/main.c:48:5:main	16	static
