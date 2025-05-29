@@ -13,7 +13,7 @@ A lightweight RTOS implementation built from scratch for ARM Cortex-M processors
 
 **Required:**
 - STM32F446RE Nucleo Board
-- 3 LEDs with 220Ω resistors
+- 3 LEDs with 220Ω resistors(optional)
 
 **Connections:**
 - PA7 → Red LED → GND
