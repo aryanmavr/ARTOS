@@ -1,75 +1,101 @@
 # ARTOS - ARM Real-Time Operating System
 
-A minimal RTOS implementation for ARM Cortex-M processors, specifically designed for the STM32F446RE microcontroller.
+A lightweight RTOS implementation built from scratch for ARM Cortex-M processors, demonstrated on the STM32F446RE microcontroller.
 
 ## Features
 
-- **Preemptive Priority-Based Scheduler**: Higher priority threads can interrupt lower priority ones
-- **Context Switching via PendSV**: Efficient ARM Cortex-M context switching mechanism  
-- **Thread Synchronization**: OS_delay() function for precise timing control
-- **Stack Overflow Protection**: Stack areas pre-filled with 0xDEADBEEF for debugging
-- **High Performance**: Optimized for 180MHz operation on STM32F446RE
-- **Minimal Footprint**: 2.58KB ROM 
+- Preemptive priority-based scheduler
+- Context switching using PendSV interrupt
+- Thread synchronization with OS_delay()
+- Supports up to 32 concurrent threads
 
-## Hardware Requirements
+## Hardware Setup
 
-- **STM32F446RE Nucleo Board**
-- **3 External LEDs** connected to:
-  - PA7 (Red LED) 
-  - PA8 (Blue LED)
-  - PA9 (Green LED)
+**Required:**
+- STM32F446RE Nucleo Board
+- 3 LEDs with 220Ω resistors
 
-## System Architecture
+**Connections:**
+- PA7 → Red LED → GND
+- PA8 → Blue LED → GND
+- PA9 → Green LED → GND
 
-**Three-Layer Design:**
+## Build and Run
 
-1. **Application Layer** (main.c)
-   - Thread management and application logic
-   - Three demonstration threads with different priorities
+1. Open project in STM32CubeIDE
+2. Build and flash to STM32F446RE
+3. Connect LEDs as shown above
+4. Reset board - all 3 LEDs should blink at different rates
 
-2. **ARTOS Core** (artos.c) 
-   - Priority-based scheduler
-   - Context switching via PendSV interrupt
-   - Thread synchronization and timing
+## Demo Application
 
-3. **Hardware Layer** (bsp.c)
-   - STM32F446RE board support
-   - GPIO control for LED demonstration
-   - System clock configuration (180MHz)
+Three threads demonstrate preemptive multitasking:
 
-
-## Thread Demonstration
-
-The demo application showcases three concurrent threads with different priorities:
-
-| Thread | LED Color | Blink Rate | Priority | Purpose |
-|--------|-----------|------------|----------|---------|
-| blinky1 | Green | 250ms on/off | 5 (High) | Demonstrates high-priority execution |
-| blinky2 | Blue | 500ms on/off | 2 (Medium) | Shows medium-priority scheduling |
-| blinky3 | Red | 1000ms on/off | 1 (Low) | Illustrates low-priority background task |
-
-## Performance Metrics
-
-- **System Clock**: 180MHz (maximum for STM32F446RE)
-- **System Tick**: 1ms resolution
-- **Thread Stack Size**: 256 bytes each
-- **Maximum Threads**: 32 concurrent threads supported
+| Thread | LED | Period | Priority |
+|--------|-----|--------|----------|
+| blinky1 | Green | 500ms (250ms on/250ms off) | 5 (High) |
+| blinky2 | Blue | 1000ms (500ms on/500ms off) | 2 (Medium) |
+| blinky3 | Red | 2000ms (1000ms on/1000ms off) | 1 (Low) |
 
 ## Expected Behavior
 
-When running correctly, you should observe:
-- **Green LED**: Fast blinking - highest priority
-- **Blue LED**: Medium blinking - medium priority  
-- **Red LED**: Slow blinking - lowest priority
-- All LEDs run **simultaneously** without interfering with each other
+When the project is built and running correctly:
 
-## Code Structure
+- **Green LED**: Fast blinking - ON for 250ms, OFF for 250ms (highest priority thread)
+- **Blue LED**: Medium blinking - ON for 500ms, OFF for 500ms (medium priority thread)
+- **Red LED**: Slow blinking - ON for 1000ms, OFF for 1000ms (lowest priority thread)
 
-ARTOS/
-- src/
-  - artos.c/h (Core RTOS implementation)
-  - bsp.c/h (Board Support Package)  
-  - main.c (Application threads)
-  - qassert.h (Debug assertions)
-  - syscalls.c (System call stubs)
-- README.md
+All three LEDs will blink **simultaneously and independently** - demonstrating that the RTOS is successfully running multiple threads concurrently. The different blink rates show the priority-based scheduling in action.
+
+## System Architecture
+
+ARTOS follows a layered architecture:
+
+**Application Layer (main.c)**
+- Thread definitions and application logic
+- User-defined thread functions
+
+**RTOS Kernel (artos.c/h)**
+- Priority-based scheduler
+- Context switching via PendSV interrupt
+- Thread management and synchronization
+
+**Hardware Abstraction (bsp.c/h)**
+- STM32F446RE board support
+- GPIO control and system clock configuration
+- Hardware-specific initialization
+
+## Technical Details
+
+- **Target:** STM32F446RE (ARM Cortex-M4)
+- **System Tick:** 1ms resolution
+- **Stack Size:** 256 bytes per thread
+- **Scheduling:** Priority-based preemptive
+
+## API Example
+
+```c
+// Initialize RTOS
+OS_init(stack_idleThread, sizeof(stack_idleThread));
+
+// Create a thread
+OSThread_start(&blinky1, 5U, &main_blinky1,
+               stack_blinky1, sizeof(stack_blinky1));
+
+// Start scheduler
+OS_run();
+
+// Thread function
+void main_blinky1() {
+    while (1) {
+        BSP_ledGreenOn();
+        OS_delay(250);  // 250ms
+        BSP_ledGreenOff();
+        OS_delay(250);
+    }
+}
+```
+
+## License
+
+Open source project.
